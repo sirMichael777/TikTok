@@ -104,3 +104,4 @@ public class Menu extends JFrame {
         setVisible(true);
     }
 }
+
