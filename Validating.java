@@ -17,4 +17,8 @@ public class Validating {
             }
         }
         return false;
+    }protected static void ValidateVideo(String Video){
+	while (Video.isBlank() || Video.length() < 5 || !(Video.substring(Video.length() -4, Video.length()).equals(".mpg"))){
+	JOptionPane.showMessageDialog(null, "Either the video is empty or it doesn't contain the exetension \".pmg\", Try again!");
+	Video = JOptionPane.showInputDialog(null, "Enter the video:");
     }
