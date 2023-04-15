@@ -31,4 +31,5 @@ public class Validating {
    protected static void  validateLikes(Object Likes){
 	return Validating.isValidInteger(Likes);
     }
+   protected static void  
 }
