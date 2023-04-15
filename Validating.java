@@ -28,5 +28,7 @@ public class Validating {
             AccName = JOptionPane.showInputDialog(null, "Enter the Account Name:");
         }
     }
-   
+   protected static void  validateLikes(Object Likes){
+	return Validating.isValidInteger(Likes);
+    }
 }
