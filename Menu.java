@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 public class Menu extends JFrame {
 
     public Menu () {
@@ -84,6 +85,12 @@ public class Menu extends JFrame {
                 String name = JOptionPane.showInputDialog(null, "Enter the Account Name:");
                 Validating.validateAccName(name);
                 while (Validating.isAccExisting(new Account(name))){
+                    Random random = new Random();
+                    String suggestion = name+ random.nextInt(2);
+                    while(Validating.isAccExisting(new Account(suggestion))){
+                        suggestion = name + random.nextInt(2);
+                    }
+                    JOptionPane.showMessageDialog(null, "Sorry the username you want to use has been taken, you can try " + suggestion);
                     name = JOptionPane.showInputDialog(null, "Enter the Account Name:");
                     Validating.validateAccName(name);
                 }
@@ -92,7 +99,15 @@ public class Menu extends JFrame {
                 Validating.validateTitle(description);
                 method3(name, description);
             } else if (option4.isSelected()) {
-                method4(JOptionPane.showInputDialog(null, "Enter the account name:"));
+                String name = JOptionPane.showInputDialog(null, "Enter the Account Name:");
+                Validating.validateAccName(name);
+                while (!Validating.isAccExisting(new Account(name))){
+                    JOptionPane.showMessageDialog(null, "Sorry the Account you want to delete doesn't exist, try another account name.");
+                    name = JOptionPane.showInputDialog(null, "Enter the Account Name:");
+                    Validating.validateAccName(name);
+                }
+                method4(name);
+
             } else if (option5.isSelected()) {
                 
             } else if (option6.isSelected()) {
@@ -104,7 +119,6 @@ public class Menu extends JFrame {
                 Validating.validateTitle(Video);
                 Object Likes = JOptionPane.showInputDialog(null, "Enter the number of likes:");
                 Validating.validateLikes(Likes);
-                
                 method6(AccName,Video, Title, (Integer)Likes);
             } else if (option7.isSelected()) {
                 method7(JOptionPane.showInputDialog(null, "Enter the file name:"));
@@ -124,13 +138,15 @@ public class Menu extends JFrame {
     public void method1 (String AccName) {
         Account tempAccount = new Account(AccName);
         Node<Account> result = TokTik.AccountsTree.search(TokTik.AccountsTree.root, tempAccount);
-        JOptionPane.showMessageDialog(null, result.toString());
+        JOptionPane.showMessageDialog(null, result.data.getDescription(tempAccount));
     }
     public void method3(String name, String description) {
        TokTik.AccountsTree.insert(new Account(name, description));
+       JOptionPane.showMessageDialog(null, "Account with username : " + name + " has been created successfully, welcome to TokTik.");
     }
-    public void method4 (String input) {
-        
+    public void method4 (String name) {
+        TokTik.AccountsTree.delete(new Account(name));
+        JOptionPane.showMessageDialog(null, "Account with username : " + name + " has been deleted successfully, we're saddened to see you leave, hoping to see you back soon.");
     }
     public void method5 (String input) {
         

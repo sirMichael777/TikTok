@@ -11,7 +11,7 @@ public class Account implements Comparable<Account>{
         this.Name = name;
     }
     public String getDescription(Account account){
-        return "The account description " + Description;
+        return "The profile description is " + Description;
     }
     public Account (String name){
         this.Name = name;
@@ -19,4 +19,5 @@ public class Account implements Comparable<Account>{
     public int compareTo(Account Another){
         return this.Name.compareTo(Another.Name);
     }
+    
 }
