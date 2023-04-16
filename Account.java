@@ -1,11 +1,12 @@
 import java.util.ArrayList;
+import java.util.Stack;
 public class Account implements Comparable<Account>{
     protected String Name;
     protected String Description;
     public String toString(){
         return this.Name;
     }
-    public ArrayList<String> Posts = new ArrayList<String>();
+    Stack<String> Posts = new Stack<String>();
     public Account(String name, String description){
         this.Description = description;
         this.Name = name;

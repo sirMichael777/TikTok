@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
+import java.util.Stack;
+import java.util.ArrayList;
 public class Menu extends JFrame {
 
     public Menu () {
@@ -109,6 +111,19 @@ public class Menu extends JFrame {
                 method4(name);
 
             } else if (option5.isSelected()) {
+                String name = JOptionPane.showInputDialog(null, "Enter the Account Name:");
+                Validating.validateAccName(name);
+                while (!Validating.isAccExisting(new Account(name))){
+                    JOptionPane.showMessageDialog(null, "Sorry the Account you want to display posts for doesn't exist, try another account name.");
+                    name = JOptionPane.showInputDialog(null, "Enter the Account Name:");
+                    Validating.validateAccName(name);
+                }
+                Node<Account> result =TokTik.AccountsTree.search(TokTik.AccountsTree.root, new Account(name));
+                if (result.data.Posts.size() == 0){
+                    JOptionPane.showMessageDialog(null, "Sorry the Account you want to display posts for doesn't have posts");
+                }else{
+                    method5(name,result.data.Posts);
+                }
                 
             } else if (option6.isSelected()) {
                 String AccName = JOptionPane.showInputDialog(null, "Enter the account name:");
@@ -148,8 +163,19 @@ public class Menu extends JFrame {
         TokTik.AccountsTree.delete(new Account(name));
         JOptionPane.showMessageDialog(null, "Account with username : " + name + " has been deleted successfully, we're saddened to see you leave, hoping to see you back soon.");
     }
-    public void method5 (String input) {
-        
+    public void method5 (String name, Stack<String> AccPosts) {
+        Account tempAccount = new Account(name);
+        Node<Account> account = TokTik.AccountsTree.search(TokTik.AccountsTree.root, tempAccount);
+        String result = "";
+        while (AccPosts.size() == 0){
+
+        }
+        while (AccPosts.size() != 0){
+            result += AccPosts.peek().toString();
+        }
+        JOptionPane.showMessageDialog(null, result);
+       
+
     }
 
     public void method6 (String AccName, String Video, String Title, int Likes) {
