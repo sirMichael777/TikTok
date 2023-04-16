@@ -22,14 +22,13 @@ public class Validating {
 	while (Video.isBlank() || Video.length() < 5 || !(Video.substring(Video.length() -4, Video.length()).equals(".mpg"))){
 	JOptionPane.showMessageDialog(null, "Either the video is empty or it doesn't contain the exetension \".pmg\", Try again!");
 	Video = JOptionPane.showInputDialog(null, "Enter the video:");}
-    }protected static void validateAccName (String AccName) {
+    }
+    protected static void validateAccName (String AccName) {
         while (AccName.isBlank()) {
             JOptionPane.showMessageDialog(null, "Account Name can't be blank!, Please try again!");
             AccName = JOptionPane.showInputDialog(null, "Enter the Account Name:");
         }
     }
-   protected static void  validateLikes(Object Likes){
-	return Validating.isValidInteger(Likes);
-    }
-   protected static void  
+    com
+   
 }
