@@ -4,10 +4,7 @@
 
 import javax.swing.*;
 public class Validating {
-    protected static boolean checkAccValidity (String input) {
-        if (!input.contains(" ") || input.isBlank()){return false;}
-        else{return true;}
-    }protected static boolean isValidInteger(Object input) {
+    protected static boolean isValidInteger(Object input) {
         if (input instanceof String) {
             try {
                 int value = Integer.parseInt((String) input);
@@ -18,17 +15,31 @@ public class Validating {
         }
         return false;
     }
-    protected static void ValidateVideo(String Video){
+    protected static void validateVideo(String Video){
 	while (Video.isBlank() || Video.length() < 5 || !(Video.substring(Video.length() -4, Video.length()).equals(".mpg"))){
-	JOptionPane.showMessageDialog(null, "Either the video is empty or it doesn't contain the exetension \".pmg\", Try again!");
+	JOptionPane.showMessageDialog(null, "Either the video is empty or it doesn't contain the exetension \".mpg\", Please Try again!");
 	Video = JOptionPane.showInputDialog(null, "Enter the video:");}
     }
     protected static void validateAccName (String AccName) {
-        while (AccName.isBlank()) {
-            JOptionPane.showMessageDialog(null, "Account Name can't be blank!, Please try again!");
+        while (AccName.isBlank() || AccName.contains(" ")) {
+            JOptionPane.showMessageDialog(null, "Account Name can't be blank and can't contain spaces in between!, Please try again!");
             AccName = JOptionPane.showInputDialog(null, "Enter the Account Name:");
         }
     }
-    com
-   
+    protected static void validateTitle(String Title){
+        while (Title.isBlank()) {
+            JOptionPane.showMessageDialog(null, "Title can't be blank!, Please try again!");
+            Title = JOptionPane.showInputDialog(null, "Enter the Title:");
+        }
+    }
+    protected static boolean validateLikes(Object Likes){
+        return isValidInteger(Likes);
+    }
+    protected static boolean isAccExisting(Account account){
+        Node<Account> result =TokTik.AccountsTree.search(TokTik.AccountsTree.root, account);
+        if (result == null){
+            return false;
+        }
+        else return true;
+    }
 }

@@ -1,4 +1,5 @@
 public class BinaryTree <T extends Comparable<T>> {
+
     Node<T> root;
 
     BinaryTree () {
@@ -23,12 +24,14 @@ public class BinaryTree <T extends Comparable<T>> {
         return root;
     }
 
-    void inorderTraversal(Node<T> node) {
+    String inorderTraversal(Node<T> node) {
+        StringBuilder result = new StringBuilder();
         if (node != null) {
-            inorderTraversal(node.left);
-            System.out.print(node.data + " ");
-            inorderTraversal(node.right);
+            result.append(inorderTraversal(node.left));
+            result.append(node.data).append(" ");
+            result.append(inorderTraversal(node.right));
         }
+        return result.toString();
     }
 
     Node<T> search(Node<T> node, T key) {

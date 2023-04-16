@@ -60,13 +60,18 @@ public class Menu extends JFrame {
             if (option1.isSelected()) {
                 String AccName = JOptionPane.showInputDialog(null, "Enter the account name:");
                 Validating.validateAccName(AccName);
-                
+                Account tempAccount = new Account(AccName);
+                while (!Validating.isAccExisting(tempAccount)){
+                    JOptionPane.showMessageDialog(null, "The account you are looking for doesn't exist");
+                    AccName = JOptionPane.showInputDialog(null, "Enter the account name:");
+                    Validating.validateAccName(AccName);
+                    tempAccount = new Account(AccName);
+                }
                 method1(AccName);
             } else if (option2.isSelected()) {
-                method2(JOptionPane.showInputDialog(null, "Enter the account name:"));
+                String allAccounts = TokTik.AccountsTree.inorderTraversal(TokTik.AccountsTree.root);
             } else if (option3.isSelected()) {
                 String name = JOptionPane.showInputDialog(null, "Enter the Account Name:");
-
                 String description = JOptionPane.showInputDialog(null, "Enter the Account description:");
                 while (description.isBlank()){
                     JOptionPane.showMessageDialog(null, "Account description can't be empty! Try again!");
@@ -76,7 +81,7 @@ public class Menu extends JFrame {
             } else if (option4.isSelected()) {
                 method4(JOptionPane.showInputDialog(null, "Enter the account name:"));
             } else if (option5.isSelected()) {
-                method5(JOptionPane.showInputDialog(null, "Enter the account name:"));
+                
             } else if (option6.isSelected()) {
                 String AccName = JOptionPane.showInputDialog(null, "Enter the account name:");
                 Validating.validateAccName(AccName);
@@ -86,12 +91,12 @@ public class Menu extends JFrame {
                 Validating.validateTitle(Video);
                 Object Likes = JOptionPane.showInputDialog(null, "Enter the number of likes:");
                 Validating.validateLikes(Likes);
-                JOptionPane.showMessageDialog(null, "Post successfully Added.");
-                method6(AccName,Video, Title, (Integer) Likes);
+                
+                method6(AccName,Video, Title, (Integer)Likes);
             } else if (option7.isSelected()) {
                 method7(JOptionPane.showInputDialog(null, "Enter the file name:"));
             } else if (option8.isSelected()) {
-                JOptionPane.showMessageDialog(null, "Bye!");
+                JOptionPane.showMessageDialog(null, "Thank you for using the best social media platform, Bye!");
                 System.exit(0);
             } else {
                 JOptionPane.showMessageDialog(null, "Choose an action from the menu:.");
@@ -103,11 +108,10 @@ public class Menu extends JFrame {
 
         setVisible(true);
     }
-    public void method1 (String input) {
-  
-    }
-    public void method2 (String input) {
-        
+    public void method1 (String AccName) {
+        Account tempAccount = new Account(AccName);
+        Node<Account> result = TokTik.AccountsTree.search(TokTik.AccountsTree.root, tempAccount);
+        JOptionPane.showMessageDialog(null, result.toString());
     }
     public void method3(String name, String surname) {
        
