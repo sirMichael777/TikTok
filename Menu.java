@@ -58,9 +58,9 @@ public class Menu extends JFrame {
         JButton submitButton = new JButton("Proceed");
         submitButton.addActionListener(e -> {
             if (option1.isSelected()) {
-                method1(JOptionPane.showInputDialog(null, "Enter the account name:"));
                 String AccName = JOptionPane.showInputDialog(null, "Enter the account name:");
                 Validating.validateAccName(AccName);
+                
                 method1(AccName);
             } else if (option2.isSelected()) {
                 method2(JOptionPane.showInputDialog(null, "Enter the account name:"));
@@ -102,6 +102,28 @@ public class Menu extends JFrame {
         add(panel);
 
         setVisible(true);
+    }
+    public void method1 (String input) {
+  
+    }
+    public void method2 (String input) {
+        
+    }
+    public void method3(String name, String surname) {
+       
+    }
+    public void method4 (String input) {
+        
+    }
+    public void method5 (String input) {
+        
+    }
+
+    public void method6 (String AccName, String Video, String Title, int Likes) {
+
+    }
+    public void method7(String input) {
+        
     }
 }
 
