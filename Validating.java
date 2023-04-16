@@ -17,7 +17,7 @@ public class Validating {
     }
     protected static void validateVideo(String Video){
 	while (Video.isBlank() || Video.length() < 5 || !(Video.substring(Video.length() -4, Video.length()).equals(".mpg"))){
-	JOptionPane.showMessageDialog(null, "Either the video is empty or it doesn't contain the exetension \".mpg\", Please Try again!");
+	JOptionPane.showMessageDialog(null, "Either the video is empty or it doesn't contain the extension \".mpg\", Please Try again!");
 	Video = JOptionPane.showInputDialog(null, "Enter the video:");}
     }
     protected static void validateAccName (String AccName) {
@@ -34,6 +34,12 @@ public class Validating {
     }
     protected static boolean validateLikes(Object Likes){
         return isValidInteger(Likes);
+    }
+    protected static void validateDesc(String description){
+        while (description.isBlank()) {
+            JOptionPane.showMessageDialog(null, "Description can't be blank!, Please try again!");
+            description = JOptionPane.showInputDialog(null, "Enter the Title:");
+        }
     }
     protected static boolean isAccExisting(Account account){
         Node<Account> result =TokTik.AccountsTree.search(TokTik.AccountsTree.root, account);

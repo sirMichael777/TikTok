@@ -58,25 +58,38 @@ public class Menu extends JFrame {
         JButton submitButton = new JButton("Proceed");
         submitButton.addActionListener(e -> {
             if (option1.isSelected()) {
-                String AccName = JOptionPane.showInputDialog(null, "Enter the account name:");
-                Validating.validateAccName(AccName);
-                Account tempAccount = new Account(AccName);
-                while (!Validating.isAccExisting(tempAccount)){
-                    JOptionPane.showMessageDialog(null, "The account you are looking for doesn't exist");
-                    AccName = JOptionPane.showInputDialog(null, "Enter the account name:");
+                if (TokTik.AccountsTree.root == null){
+                    JOptionPane.showMessageDialog(null, "There are no accounts yet!, You can try entering accounts first.");
+                }else{
+                    String AccName = JOptionPane.showInputDialog(null, "Enter the account name:");
                     Validating.validateAccName(AccName);
-                    tempAccount = new Account(AccName);
+                    Account tempAccount = new Account(AccName);
+                    while (!Validating.isAccExisting(tempAccount)){
+                        JOptionPane.showMessageDialog(null, "The account you are looking for doesn't exist");
+                        AccName = JOptionPane.showInputDialog(null, "Enter the account name:");
+                        Validating.validateAccName(AccName);
+                        tempAccount = new Account(AccName);
+                    }
+                    method1(AccName);
                 }
-                method1(AccName);
             } else if (option2.isSelected()) {
-                String allAccounts = TokTik.AccountsTree.inorderTraversal(TokTik.AccountsTree.root);
+                if (TokTik.AccountsTree.root == null){
+                    JOptionPane.showMessageDialog(null, "There are no accounts yet!, You can try entering accounts first.");
+                }
+                else{
+                    String allAccounts = TokTik.AccountsTree.inorderTraversal(TokTik.AccountsTree.root);
+                    JOptionPane.showMessageDialog(null, allAccounts);
+                }
             } else if (option3.isSelected()) {
                 String name = JOptionPane.showInputDialog(null, "Enter the Account Name:");
-                String description = JOptionPane.showInputDialog(null, "Enter the Account description:");
-                while (description.isBlank()){
-                    JOptionPane.showMessageDialog(null, "Account description can't be empty! Try again!");
-                    description = JOptionPane.showInputDialog(null, "Enter the Account description:");
+                Validating.validateAccName(name);
+                while (Validating.isAccExisting(new Account(name))){
+                    name = JOptionPane.showInputDialog(null, "Enter the Account Name:");
+                    Validating.validateAccName(name);
                 }
+
+                String description = JOptionPane.showInputDialog(null, "Enter the Account description:");
+                Validating.validateTitle(description);
                 method3(name, description);
             } else if (option4.isSelected()) {
                 method4(JOptionPane.showInputDialog(null, "Enter the account name:"));
@@ -113,8 +126,8 @@ public class Menu extends JFrame {
         Node<Account> result = TokTik.AccountsTree.search(TokTik.AccountsTree.root, tempAccount);
         JOptionPane.showMessageDialog(null, result.toString());
     }
-    public void method3(String name, String surname) {
-       
+    public void method3(String name, String description) {
+       TokTik.AccountsTree.insert(new Account(name, description));
     }
     public void method4 (String input) {
         

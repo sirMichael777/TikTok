@@ -20,7 +20,6 @@ public class BinaryTree <T extends Comparable<T>> {
             root.left = insertRec(root.left, data);
         else if (data.compareTo(root.data) > 0)
             root.right = insertRec(root.right, data);
-
         return root;
     }
 
