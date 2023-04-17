@@ -63,7 +63,7 @@ public class BinaryTree <T extends Comparable<T>> {
         StringBuilder result = new StringBuilder();
         if (node != null) {
             result.append(inorderTraversal(node.left));
-            result.append(node.data).append(" ");
+            result.append(node.data).append("\n");
             result.append(inorderTraversal(node.right));
         }
         return result.toString();
