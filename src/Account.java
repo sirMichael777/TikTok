@@ -24,7 +24,7 @@ public class Account implements Comparable<Account> {
     }
 
     public String getDescription(Account account) {
-        return "The profile description of " + Name + " is " + Description;
+        return "The profile description of " + Name + " is: " + Description;
     }
     /**
      * Constructor for creating a temporary account which is then used for comparison or searching purposes only

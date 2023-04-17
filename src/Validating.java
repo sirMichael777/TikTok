@@ -19,7 +19,7 @@ public class Validating {
     }
 
     protected static String validateVideo(String Video) {
-        while (Video == null || Video.length() < 5|| !(Video.substring(Video.length() - 4, Video.length()).equals(".mpg"))) {
+        while (Video.isBlank() || Video.length() < 5|| !(Video.substring(Video.length() - 4, Video.length()).equals(".mpg"))) {
             JOptionPane.showMessageDialog(null,"Either the video is empty or it doesn't contain the extension \".mpg\", Please Try again!");
             Video = JOptionPane.showInputDialog(null, "Enter the video: (must have extension \".mpg\"");
         }
@@ -27,7 +27,7 @@ public class Validating {
     }
 
     protected static String validateAccName(String AccName) {
-        while (AccName == null || AccName.contains(" ")) {
+        while (AccName.isBlank() || AccName.contains(" ")) {
             JOptionPane.showMessageDialog(null,
                     "Account Name can't be blank and can't contain spaces in between!, Please try again!");
             AccName = JOptionPane.showInputDialog(null, "Enter the Account Name:");
@@ -36,7 +36,7 @@ public class Validating {
     }
 
     protected static String validateTitle(String Title) {
-        while (Title == null) {
+        while (Title.isBlank()) {
             JOptionPane.showMessageDialog(null, "Title can't be blank!, Please try again!");
             Title = JOptionPane.showInputDialog(null, "Enter the Title:");
         }
@@ -62,4 +62,5 @@ public class Validating {
         } else
             return true;
     }
+    
 }
