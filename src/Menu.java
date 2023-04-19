@@ -4,15 +4,22 @@ import java.util.Random;
 import java.util.Stack;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Scanner;
+/**
+ * Menu class for displaying a menu GUI and interacts with the user
+ * @author Michael Maseko
+ */
 public class Menu extends JFrame {
-
+    /**
+     * Constructor for creating a Menu GUI
+     */
     public Menu () {
         super("Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(380, 300);
-        //setLocationRelativeTo(null);
+        setSize(380, 270);
+        setLocationRelativeTo(null);
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.setBackground(Color.white);
         JLabel label = new JLabel("Choose an action from the menu:");
         label.setBackground(Color.red);
@@ -60,6 +67,7 @@ public class Menu extends JFrame {
         group.add(option8);
         panel.add(option8);
         JButton submitButton = new JButton("Proceed");
+        submitButton.setBackground(Color.decode("#FFFFFF"));
         submitButton.addActionListener(e -> {
             if (option1.isSelected()) {
                 if (TokTikTree.AccountsTree.root == null){
@@ -84,7 +92,7 @@ public class Menu extends JFrame {
                             }
                         }
                     if (AccName != null){
-                        method1(AccName);
+                        findDesc(AccName);
                         break;
                     }     
                     }
@@ -96,7 +104,12 @@ public class Menu extends JFrame {
                 }
                 else{
                     String allAccounts = TokTikTree.AccountsTree.inorderTraversal(TokTikTree.AccountsTree.root);
-                    JOptionPane.showMessageDialog(null,"The available accounts are :\n" + allAccounts);
+                    if (TokTikTree.AccountsTree.treeSize(TokTikTree.AccountsTree.root) <= 40){
+                        JOptionPane.showMessageDialog(null,"The available accounts are :\n" + allAccounts);
+                    }else{
+                        JOptionPane.showMessageDialog(null,"Your computer might not be able to handle this size, kindly check the output on the terminal");
+                        System.out.println(allAccounts);
+                    }
                 }
             } else if (option3.isSelected()) {
                 String name = JOptionPane.showInputDialog(null, "Enter the Account Name:");
@@ -124,7 +137,7 @@ public class Menu extends JFrame {
                                 description = Validating.validateDesc(description);
                             }
                             if (name != null && description != null){
-                                method3(name, description);
+                                createAcc(name, description);
                             }
                         }
                     }
@@ -148,7 +161,7 @@ public class Menu extends JFrame {
                             }
                         }
                         if (name != null){
-                            method4(name);
+                            deleteAcc(name);
                         }
                         
                     }
@@ -183,7 +196,7 @@ public class Menu extends JFrame {
                             JOptionPane.showMessageDialog(null, "Sorry the Account you want to display posts for doesn't have posts");
                             break;
                         }else{
-                            method5(name,account.data.Posts);
+                            displayPosts(name, account.data.Posts);
                             break;
                         }
                     }
@@ -214,7 +227,7 @@ public class Menu extends JFrame {
                                     if (Title != null){
                                         Title = Validating.validateTitle(Title);}
                                     if (name != null && video!= null && Title!= null){
-                                        method6(name,video, Title, 0);
+                                        addPost(name, video, Title, "0");
                                 }
                             }
                             }
@@ -223,7 +236,17 @@ public class Menu extends JFrame {
             }
         }
             } else if (option7.isSelected()) {
-                String filename = JOptionPane.showInputDialog(null, "Enter the file name:");
+                String fileName = JOptionPane.showInputDialog(null, "Enter the file name:");
+                while (fileName != null){
+                    fileName = Validating.validateFile(fileName);
+                    if (fileName == null){
+                        break;
+                    }
+                    loadFile(fileName);
+                    return;
+                }
+                    
+                
        
 
             } else if (option8.isSelected()) {
@@ -239,20 +262,38 @@ public class Menu extends JFrame {
 
         setVisible(true);
     }
-    public void method1 (String AccName) {
+    /**
+     * Method called when the user wants to view the profile decription of a given account
+     * @param AccName The name of the account that the user wants to view the profile description for
+     */
+    public void findDesc (String AccName) {
         Account tempAccount = new Account(AccName);
         Node<Account> result = TokTikTree.AccountsTree.search(TokTikTree.AccountsTree.root, tempAccount);
         JOptionPane.showMessageDialog(null, result.data.getDescription(tempAccount));
     }
-    public void method3(String name, String description) {
+    /**
+     * Method to add a new user to TokTik
+     * @param name The name they want to use as username and it's unique per user
+     * @param description The profile description of the new user
+     */
+    public void createAcc(String name, String description) {
        TokTikTree.AccountsTree.insert(new Account(name, description));
        JOptionPane.showMessageDialog(null, "Account with username : " + name + " has been created successfully, welcome to TokTik.");
     }
-    public void method4 (String name) {
+    /**
+     * Method for deleting a specific user Account
+     * @param name The username of the account to be deleted
+     */
+    public void deleteAcc(String name) {
         TokTikTree.AccountsTree.delete(new Account(name));
         JOptionPane.showMessageDialog(null, "Account with username : " + name + " has been deleted successfully, we're saddened to see you leave, hoping to see you back soon.");
     }
-    public void method5 (String name, Stack<Post> AccPosts) {
+    /**
+     * Method to display posts for a single account
+     * @param name The username of the account the user wants to display posts for
+     * @param AccPosts The Stack containing all the posts of the specific user
+     */
+    public void displayPosts (String name, Stack<Post> AccPosts) {
         String result = "";
         if (AccPosts.size() == 0){
             JOptionPane.showMessageDialog(null, "Sorry there are no posts for this account.");
@@ -262,17 +303,71 @@ public class Menu extends JFrame {
                 result += copyAccPosts.pop().toString();
                 result += "\n";
             }
-            JOptionPane.showMessageDialog(null, result);
+            if (AccPosts.size() >= 40){
+                JOptionPane.showMessageDialog(null, "This PC might not be able to handle such a large list, Please check the terminal for the results");
+                System.out.println(result);
+            }else{
+                JOptionPane.showMessageDialog(null, result);
+            }
+            
         }
     }
-
-    public void method6 (String AccName, String Video, String Title, int Likes) {
+    /**
+     * Method for adding for a specific user
+     * @param AccName The username of the user to addd a post for
+     * @param Video Video of the post
+     * @param Title The title or caption of the post
+     * @param likes The number of likes the post have, it is 0 by default if its a new post
+     */
+    public void addPost (String AccName, String Video, String Title, String likes) {
         Node<Account> account = TokTikTree.AccountsTree.search(TokTikTree.AccountsTree.root, new Account(AccName));
-        account.data.Posts.push(new Post(Video, Title, Likes));
+        account.data.Posts.push(new Post(Video, Title, likes));
         JOptionPane.showMessageDialog(null, "Post for " + AccName + " Added successfuly!");
     }
-    public void method7(String input) {
-
+    /**
+     * Method to load a textFilefile and process nthe instructions on that file
+     * @param fileName THe name of the file to be loaded
+     */
+    public void loadFile(String fileName) {
+        File file = new File(fileName);
+        if (!file.exists()){
+            JOptionPane.showMessageDialog(null, "Sorry, the specified file name doesn't exist");
+            return;
+        }try{
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()){
+                String line = scanner.nextLine();
+                if (!line.equals("")){
+                    String Action =line.substring(0,line.indexOf(" "));
+                    line = line.replace(Action + " ", "");
+                    String Account = line.substring(0,line.indexOf(" "));
+                    line = line.replace(Account + " ", "");
+                    if (Action.equals("Create")){
+                        TokTikTree.AccountsTree.insert(new Account(Account,line));
+                    }else{
+                        String Video = line.substring(0,line.indexOf(" "));
+                        line = line.replace(Video + " ", "");
+                        String likes = line.substring(0,line.indexOf(" "));
+                        String Title = line.replace(likes+ " ","");
+                        Node<Account> account = TokTikTree.AccountsTree.search(TokTikTree.AccountsTree.root, new Account(Account));
+                        account.data.Posts.push(new Post(Video, Title, likes));
+                    } 
+                }              
+            }
+            JOptionPane.showMessageDialog(null, "File loaded successfully");
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Sorry, the specified file name doesn't exist");
+            fileName = JOptionPane.showInputDialog(null, "Enter the file name:");
+            while (fileName != null){
+                fileName = Validating.validateFile(fileName);
+                if (fileName == null){
+                    break;
+                }
+            }
+        }
     }
 }
+
+
 

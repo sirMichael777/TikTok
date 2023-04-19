@@ -12,14 +12,14 @@ public class Post {
     /**
      * The number of likes a video contains
      */
-    protected  int Likes;
+    protected  String Likes;
     /**
      * Constructor to create an object of post type
      * @param video The video of the post that the user wants to post
      * @param title The title of the post
      * @param likes The number of likes that the user have
      */
-    public Post(String video,String title, int likes){
+    public Post(String video,String title, String likes){
         this.Title = title;
         this.Video = video;
         this.Likes = likes;

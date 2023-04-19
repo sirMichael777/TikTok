@@ -71,7 +71,6 @@ public class BinaryTree <T extends Comparable<T>> {
         }
         return result.toString();
     }
-
     Node<T> search(Node<T> node, T key) {
         if (node == null || node.data.compareTo(key) == 0)
             return node;
@@ -80,5 +79,12 @@ public class BinaryTree <T extends Comparable<T>> {
             return search(node.left, key);
 
         return search(node.right, key);
+    }
+    int treeSize(Node<T> root){
+        if (root == null){
+            return 0;
+        }else{
+            return 1 + treeSize(root.left) + treeSize(root.right);
+        }
     }
 }
