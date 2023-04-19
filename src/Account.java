@@ -22,7 +22,11 @@ public class Account implements Comparable<Account> {
         this.Description = description;
         this.Name = name;
     }
-
+    /**
+     * Method for getting the description of an account
+     * @param account The account that the user wants the description for
+     * @return returns the profile's description
+     */
     public String getDescription(Account account) {
         return "The profile description of " + Name + " is: " + Description;
     }

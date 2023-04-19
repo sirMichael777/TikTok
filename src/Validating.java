@@ -28,9 +28,11 @@ public class Validating {
 
     protected static String validateAccName(String AccName) {
         while (AccName.isBlank() || AccName.contains(" ")) {
-            JOptionPane.showMessageDialog(null,
-                    "Account Name can't be blank and can't contain spaces in between!, Please try again!");
+            JOptionPane.showMessageDialog(null,"Account Name can't be blank and can't contain spaces in between!, Please try again!");
             AccName = JOptionPane.showInputDialog(null, "Enter the Account Name:");
+            if (AccName == null){
+                return null;
+            }
         }
         return AccName;
     }
@@ -48,9 +50,12 @@ public class Validating {
     }
 
     protected static String validateDesc(String description) {
-        while (description == null) {
+        while (description.isBlank()) {
             JOptionPane.showMessageDialog(null, "Description can't be blank!, Please try again!");
-            description = JOptionPane.showInputDialog(null, "Enter the Title:");
+            description = JOptionPane.showInputDialog(null, "Enter the description:");
+            if (description == null){
+                return null;
+            }
         }
         return description;
     }

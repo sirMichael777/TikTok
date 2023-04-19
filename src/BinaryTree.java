@@ -1,5 +1,8 @@
+/**
+ * class for the binary Tree, Has the create node,delete and search node method in it
+ * @author Michael Maseko
+ */
 public class BinaryTree <T extends Comparable<T>> {
-
     Node<T> root;
 
     BinaryTree () {

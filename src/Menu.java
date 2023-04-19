@@ -9,7 +9,7 @@ public class Menu extends JFrame {
     public Menu () {
         super("Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(325, 300);
+        setSize(380, 300);
         //setLocationRelativeTo(null);
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -21,7 +21,7 @@ public class Menu extends JFrame {
         ButtonGroup group = new ButtonGroup();
 
         JRadioButton option1 = new JRadioButton("Find the profile description for a given account");
-        option1.setBackground(Color.blue);
+        option1.setBackground(Color.green);
         group.add(option1);
         panel.add(option1);
 
@@ -51,7 +51,7 @@ public class Menu extends JFrame {
         panel.add(option6);
 
         JRadioButton option7 = new JRadioButton("Load a file of actions from a disk and process this");
-        option7.setBackground(Color.blue);
+        option7.setBackground(Color.magenta);
         group.add(option7);
         panel.add(option7);
 
@@ -63,27 +63,36 @@ public class Menu extends JFrame {
         submitButton.addActionListener(e -> {
             if (option1.isSelected()) {
                 if (TokTikTree.AccountsTree.root == null){
-                    JOptionPane.showMessageDialog(null, "There are no accounts yet!, You can try creating accounts first.");
+                    JOptionPane.showMessageDialog(null, "There are no accounts yet!, We would appreciate it if you become our first user.");
                 }else{
                     String AccName = JOptionPane.showInputDialog(null, "Enter the account name:");
-                    Account tempAccount = new Account(Validating.validateAccName(AccName));
-                    while (!Validating.isAccExisting(tempAccount)){
-                        if (AccName == null){
-                            break;
-                        }
-                        JOptionPane.showMessageDialog(null, "The account you are looking for doesn't exist");
-                        AccName = JOptionPane.showInputDialog(null, "Enter the account name:");                          
-                            tempAccount = new Account(AccName);{
-
+                    while (AccName!= null){
+                        AccName = Validating.validateAccName(AccName);
+                        if (AccName!= null){
+                            Account tempAccount = new Account(AccName);
+                            while (!Validating.isAccExisting(tempAccount)){
+                                if (AccName == null){
+                                    break;
+                                }
+                                JOptionPane.showMessageDialog(null, "The account you are looking for doesn't exist");  
+                                AccName = JOptionPane.showInputDialog(null, "Enter the account name:"); 
+                                if (AccName != null){
+                                    AccName = Validating.validateAccName(AccName);
+                                }else {
+                                    break;
+                                }
                             }
+                        }
+                    if (AccName != null){
+                        method1(AccName);
+                        break;
+                    }     
                     }
-                if (AccName != null){
-                    method1(AccName);
-                }     
                 }
+
             } else if (option2.isSelected()) {
                 if (TokTikTree.AccountsTree.root == null){
-                    JOptionPane.showMessageDialog(null, "There are no accounts yet!, You can try creating accounts first.");
+                    JOptionPane.showMessageDialog(null, "There are no accounts yet!, We would appreciate it if you become our first user.");
                 }
                 else{
                     String allAccounts = TokTikTree.AccountsTree.inorderTraversal(TokTikTree.AccountsTree.root);
@@ -92,40 +101,39 @@ public class Menu extends JFrame {
             } else if (option3.isSelected()) {
                 String name = JOptionPane.showInputDialog(null, "Enter the Account Name:");
                 if (name != null){
-                    while (Validating.isAccExisting(new Account(name))){
+                    name = Validating.validateAccName(name);
+                    if (name != null){
                         Random random = new Random();
                         String suggestion = name+ random.nextInt(1000);
-                        while(Validating.isAccExisting(new Account(suggestion))){
-                            suggestion = name + random.nextInt(2);
+                        while (Validating.isAccExisting(new Account(name))){
+                            if (name == null){
+                                break;
+                            }
+                            suggestion = name + random.nextInt(1000);
+                            JOptionPane.showMessageDialog(null, "Sorry the username you want to use has been taken, you can try " + suggestion);       
+                            name = JOptionPane.showInputDialog(null, "Enter the Account Name:");
+                            if (name != null){
+                                name = Validating.validateAccName(name);
+                            } else{
+                                break;
+                            }
                         }
-                        JOptionPane.showMessageDialog(null, "Sorry the username you want to use has been taken, you can try " + suggestion);       
-                        name = Validating.validateAccName(JOptionPane.showInputDialog(null, "Enter the Account Name:"));
+                        if (name != null){
+                            String description = JOptionPane.showInputDialog(null, "Enter the Account description:");
+                            if (description != null){
+                                description = Validating.validateDesc(description);
+                            }
+                            if (name != null && description != null){
+                                method3(name, description);
+                            }
+                        }
                     }
-
-                    String description = JOptionPane.showInputDialog(null, "Enter the Account description:");
-                    description = Validating.validateTitle(description);
-                    method3(name, description);
                 }
             } else if (option4.isSelected()) {
                 if (TokTikTree.AccountsTree.root == null){
-                    JOptionPane.showMessageDialog(null, "There are no accounts yet!, You can try creating accounts first.");
+                    JOptionPane.showMessageDialog(null, "There are no accounts yet!, We would appreciate it if you become our first user.");
                 }
                 else{
-                    String name = JOptionPane.showInputDialog(null, "Enter the Account Name:");
-                    name = Validating.validateAccName(name);
-                    if (name != null){
-                        while (!Validating.isAccExisting(new Account(name))){
-                            JOptionPane.showMessageDialog(null, "Sorry the Account you want to delete doesn't exist, try another account name.");  
-                            name = Validating.validateAccName(JOptionPane.showInputDialog(null, "Enter the Account Name:"));
-                        }
-                        method4(name);
-                    }
-                }
-
-            } else if (option5.isSelected()) {
-                if (TokTikTree.AccountsTree.root == null){
-                    JOptionPane.showMessageDialog(null, "There are no accounts yet!, You can try creating accounts first.");
-                }else{
                     String name = JOptionPane.showInputDialog(null, "Enter the Account Name:");
                     if (name != null){
                         name = Validating.validateAccName(name);
@@ -133,39 +141,87 @@ public class Menu extends JFrame {
                             if (name == null){
                                 break;
                             }
-                            JOptionPane.showMessageDialog(null, "Sorry the Account you want to display posts for doesn't exist, try another account name.");
-                            name = Validating.validateAccName(JOptionPane.showInputDialog(null, "Enter the Account Name:"));
+                            JOptionPane.showMessageDialog(null, "Sorry the Account you want to delete doesn't exist, try another account name.");  
+                            name = JOptionPane.showInputDialog(null, "Enter the Account Name:");
+                            if (name != null){
+                                name = Validating.validateAccName(name);
+                            }
+                        }
+                        if (name != null){
+                            method4(name);
+                        }
+                        
+                    }
+                }
+
+            } else if (option5.isSelected()) {
+                if (TokTikTree.AccountsTree.root == null){
+                    JOptionPane.showMessageDialog(null, "There are no accounts yet!, We would appreciate it if you become our first user.");
+                }else{
+                    String name = JOptionPane.showInputDialog(null, "Enter the Account Name:");
+                    while (name != null){
+                        name = Validating.validateAccName(name);
+                        if (name != null){
+                            while (!Validating.isAccExisting(new Account(name))){
+                                if (name == null){
+                                    break;
+                                }
+                                JOptionPane.showMessageDialog(null, "Sorry the Account you want to display posts for doesn't exist, try another account name.");
+                                name = JOptionPane.showInputDialog(null, "Enter the Account Name:");
+                                if (name != null){
+                                    name = Validating.validateAccName(name);
+                                }else{
+                                    break;
+                                }
+                            }
+                        }
+                        if (name == null){
+                            break;
                         }
                         Node<Account> account =TokTikTree.AccountsTree.search(TokTikTree.AccountsTree.root, new Account(name));
                         if (account.data.Posts.size() == 0){
                             JOptionPane.showMessageDialog(null, "Sorry the Account you want to display posts for doesn't have posts");
+                            break;
                         }else{
-                            if (name != null){
                             method5(name,account.data.Posts);
-                            }
+                            break;
                         }
                     }
                 }
             } else if (option6.isSelected()) {
                 if (TokTikTree.AccountsTree.root == null){
-                    JOptionPane.showMessageDialog(null, "There are no accounts yet!, You can try creating accounts first.");
+                    JOptionPane.showMessageDialog(null, "There are no accounts yet!, We would appreciate it if you become our first user.");
                 }else{
                     String name = JOptionPane.showInputDialog(null, "Enter the Account Name:");
-                    
-                    name = Validating.validateAccName(name);
-                    while (!Validating.isAccExisting(new Account(name))){
-                        if (name == null){
-                            break;
+                    if (name != null){
+                        name = Validating.validateAccName(name);
+                        if (name != null){
+                        while (!Validating.isAccExisting(new Account(name))){
+                            if (name == null){
+                                break;
+                            }
+                            JOptionPane.showMessageDialog(null, "Sorry the Account you want to add posts for doesn't exist, try another account name.");
+                            name =JOptionPane.showInputDialog(null, "Enter the Account Name:");
+                            if (name != null){
+                                name = Validating.validateAccName(name);
+                            }
+                        }if (name != null){
+                            String video = JOptionPane.showInputDialog(null, "Enter the video: (must have extension \".mpg\"");
+                            if (video != null){
+                                video = Validating.validateVideo(video);
+                                if (video != null){
+                                    String Title = JOptionPane.showInputDialog(null, "Enter the Title:");
+                                    if (Title != null){
+                                        Title = Validating.validateTitle(Title);}
+                                    if (name != null && video!= null && Title!= null){
+                                        method6(name,video, Title, 0);
+                                }
+                            }
+                            }
                         }
-                        JOptionPane.showMessageDialog(null, "Sorry the Account you want to add posts for doesn't exist, try another account name.");
-                        name = Validating.validateAccName(JOptionPane.showInputDialog(null, "Enter the Account Name:"));
-                    }
-                    String video = JOptionPane.showInputDialog(null, "Enter the video: (must have extension \".mpg\"");
-                    video = Validating.validateVideo(video);
-                    String Title = JOptionPane.showInputDialog(null, "Enter the Title:");
-                    Title = Validating.validateTitle(Title);
-                    method6(name,video, Title, 0);
                 }
+            }
+        }
             } else if (option7.isSelected()) {
                 String filename = JOptionPane.showInputDialog(null, "Enter the file name:");
        
@@ -203,7 +259,7 @@ public class Menu extends JFrame {
         }else{
             Stack<Post> copyAccPosts = AccPosts;
             while (copyAccPosts.size() != 0){
-                result += copyAccPosts.peek().toString();
+                result += copyAccPosts.pop().toString();
                 result += "\n";
             }
             JOptionPane.showMessageDialog(null, result);
