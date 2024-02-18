@@ -100,6 +100,11 @@ public class Validating {
         } else
             return true;
     }
+    /**
+     * Method to check if a file name is valid or not iteratively so, if its invalid it asks for another one until the user presses cancel or enters a valid input
+     * @param fileName Name of the file to be checked
+     * @return returns the valid input should the user enters it or it returns null if the usr cancels the process
+     */
     protected static String validateFile(String fileName) {
         while (fileName.isBlank() || fileName.length() < 5|| !(fileName.substring(fileName.length() - 4, fileName.length()).equals(".txt"))) {
             JOptionPane.showMessageDialog(null,"Either the file name is empty or it doesn't contain the extension \".txt\", Please Try again!");
