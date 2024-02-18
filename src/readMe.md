@@ -5,14 +5,14 @@ TokTik is a Java-based social media platform inspired by TikTok, implementing co
 
 ## Project Structure
 The project comprises several Java classes organized as follows:
-- `Account.java`: Represents user accounts, offering methods for creation, description retrieval, and comparison.
-- `BinaryTree.java`: Defines a binary search tree for storing accounts, featuring methods for insertion, deletion, search, traversal, and size retrieval.
-- `Menu.java`: Implements a GUI menu for user interaction, providing options for various actions.
-- `Node.java`: Defines the node structure for the binary search tree.
-- `Post.java`: Represents user posts, including video content, titles, and likes.
-- `TokTik.java`: Contains the main method to run the application and initialize the menu.
-- `TokTikTree.java`: Creates and manages a binary search tree to store user accounts.
-- `Validating.java`: Provides methods for validating user inputs, such as account names, descriptions, titles, videos, and file names.
+- **Account**: Represents user accounts, offering methods for creation, description retrieval, and comparison.
+- **BinaryTree**: Defines a binary search tree for storing accounts, featuring methods for insertion, deletion, search, traversal, and size retrieval.
+- **Menu**: Implements a graphical user interface (GUI) menu for user interaction, providing options for various actions.
+- **Node**: Defines the node structure for the binary search tree.
+- **Post**: Represents user posts, including video content, titles, and likes.
+- **TokTik**: Contains the main method to run the application and initialize the menu.
+- **TokTikTree**: Creates and manages a binary search tree to store user accounts.
+- **Validating**: Provides methods for validating user inputs, such as account names, descriptions, titles, videos, and file names.
 
 ## Functionality
 TokTik offers functionalities reminiscent of TikTok:
@@ -25,26 +25,21 @@ TokTik offers functionalities reminiscent of TikTok:
 - **GUI Interface**: Interaction with the application is facilitated through a graphical user interface.
 
 ## Usage
-To run the TokTik application:
-1. Compile all Java files in the project.
-2. Run the `TokTik.java` file to initialize the GUI menu.
-3. Follow the prompts in the menu to perform various actions.
+### Linux Environment
+To run the TokTik application on a Linux environment:
+1. **Build the Project**: Open a terminal in the project directory and execute `make` to compile all Java files.
+2. **Run the Application**: Execute `make run` to run the application. This will initialize the GUI menu for user interaction.
 
-## Important Notes
-- **Account Names**: Usernames must be unique and cannot contain spaces.
-- **File Loading**: Ensure the file format is correct (.txt extension) and follows the specified action format when loading actions from a file.
+### Windows Environment
+For Windows users, the traditional method for running Java applications can be used:
+1. **Compile**: Open a command prompt in the project directory and compile the Java files using `javac`:
+   ```
+   javac TokTik.java
+   ```
+2. **Run the Application**: Execute the compiled `TokTik.class` file as the main class:
+   ```
+   java TokTik
+   ```
 
-## Contributors
-- **Michael Maseko**: Lead developer responsible for designing and implementing the TokTik application.
-
-## Contacts
-For any questions or concerns regarding this project, please contact Michael Maseko at michaelcmcmaseko@gmail.com
-
-## Dependencies
-- Java 8 or higher
-- Swing (for GUI components)
-
-## Future Improvements
-- Implement user authentication and security features to enhance account protection.
-- Enhance the GUI with more intuitive design and additional features inspired by TikTok's interface.
-- Integrate multimedia capabilities for viewing and posting videos directly within the application.
+## Developer Contact
+For any inquiries or feedback regarding TokTik, please contact the developer at michaelcmcmaseko@gmail.com.
